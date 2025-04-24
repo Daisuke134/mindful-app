@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindful App</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* アラートの位置を調整 */
+        #mw-alert {
+            position: fixed;
+            top: 35%;  /* 40%から35%に変更してより上に */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffebee;
+            color: black;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 28px;
+            font-weight: bold;
+            display: none; /* アラートを非表示に */
+            z-index: 2000;
+            border: 2px solid #ff0000;
+        }
+
+        /* 現在の検出条件の表示スタイル */
+        #detection-conditions {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            z-index: 2000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 検出条件の表示を追加 -->
+        <div id="detection-conditions">
+            <h4 style="margin: 0 0 5px 0">現在の検出条件（AND）:</h4>
+            <div>👀 目の動き > 0.000680</div>
+            <div>👁 瞳孔非対称 > 0.000950</div>
+        </div>
+
+        <div id="debug-panel" class="debug-panel">
+            <h3>リアルタイムデータ</h3>
+            <div class="debug-data">
+                <div>👁 左目の開き具合: <span id="left-eye">0.00</span></div>
+                <div>👁 右目の開き具合: <span id="right-eye">0.00</span></div>
+                <div>👀 目の非対称性: <span id="eye-asymmetry">0.00</span></div>
+                <div>👀 まばたきの間隔: <span id="blink-interval">計測中</span>ms</div>
+                <div>👀 瞳孔の大きさ: <span id="pupil-size">0.00</span></div>
+                <div>👀 瞳孔の非対称性: <span id="pupil-asymmetry">0.00</span></div>
+                <div>👀 目の動きの速さ: <span id="eye-movement">0.00</span></div>
+                <div>😊 表情の自然さ: <span id="face-expression">0.00</span></div>
+                <div>🎯 顔の傾き: <span id="face-tilt">0.0°</span></div>
+                <div>🔄 顔の回転: <span id="face-rotation">0.0°</span></div>
+                <div>👁 まばたき回数: <span id="blink-rate">0</span></div>
+                <div>⚡ FPS: <span id="fps">0</span></div>
+                <div>🎭 Mind Wanderingスコア: <span id="mind-wandering-score">0.00</span></div>
+                <div>⚠️ 注意散漫: <span id="is-mind-wandering">No</span></div>
+            </div>
+            <div class="debug-status">
+                <div>記録回数: <span id="record-count">0</span></div>
+                <div>現在のラベル: <span id="current-label">正常</span></div>
+                <div>状態: <span id="current-state">監視中</span></div>
+                <div>ラベル: <span id="label-status">通常</span></div>
+                <div>状態: <span id="state-status">監視中</span></div>
+            </div>
+        </div>
+
+        <div id="main-text" class="main-text watching">見てる</div>
+        <!-- 新しいアラート -->
+        <div id="mw-alert">⚠️ 注意力が低下！</div>
+
+        <div id="camera-preview" class="camera-preview">
+            <video id="video" autoplay playsinline></video>
+        </div>
+    </div>
+
+    <!-- MediaPipeの顔認識ライブラリ -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils"></script>
+
+    <!-- アプリケーションスクリプト -->
+    <script src="js/face_mesh.js"></script>
+    <script src="js/mind_wandering_model.js"></script>
+    <script src="js/features.js"></script>
+    <script src="js/camera.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
